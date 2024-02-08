@@ -22,9 +22,8 @@ def print_hi():
     print("8",x.identify_month_with_highest_sales())
     print("9",x.analys_sales_data())
     print("10",x.add_to_dict_minimest_seling_and_avg())
-
-
-
+    print("11",x.calculate_cumulative_sales())
+    x.bar_chart_category_sum()
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi()
