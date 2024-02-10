@@ -1,3 +1,5 @@
+from typing import List
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,6 +17,8 @@ class SalesData:
         #self.df=FileOperation.read_csv(path)
         x=FileOperation()
         self.df=x.read_csv(path)
+        self.numpy_array = self.df.values
+
 
     #4
     def eliminate_duplicates(self):
@@ -101,27 +105,129 @@ class SalesData:
     #     cumulative_sales = monthly_sales.groupby('Product')['Total'].cumsum()
     #
     #     return cumulative_sales
+    #12
+    def calculate_90_percent_values(self):
+        self.df['Discount'] = np.round((self.df['Total'] * 0.9))
+        return self.df
+    #13
+        # sns.get_dataset_names()
+    # def bar_chart_category_sum(self):
+    #     # sns.get_dataset_names()
+    #
+    #     sns.lineplot(x='Product', y=self.df.calculate_total_sales() ,data=self.df)
+    #     y=self.calculate_total_sales()
+    #     sns.lineplot(x='Product', y='Total', data=self.df)
+    #     plt.show()
+#from gpt
+    def bar_chart_category_sum(self):
+        # Calculate the sum of quantities sold for each product
+        product_sales = self.df.groupby('Product')['Quantity'].sum().reset_index()
+
+        # Plot a line chart
+        plt.figure(figsize=(10, 6))
+        sns.lineplot(x='Product', y='Quantity', data=product_sales, marker='o')
+        plt.title('Sum of Quantities Sold for Each Product')
+        plt.xlabel('Product')
+        plt.ylabel('Sum of Quantity Sold')
+        plt.xticks(rotation=45, ha='right')
+        plt.tight_layout()
+        plt.show()
 
     #13
-    def bar_chart_category_sum(self):
-        # sns.get_dataset_names()
-        # sns.lineplot(x='Product', y=self.df.calculate_total_sales(() ,data=self.df)
-        y=self.calculate_total_sales()
-        sns.lineplot(x='Product', y='Total', data=self.df)
-        plt.show()
-#from gpt
-    # def bar_chart_category_sum(self):
-    #     # Calculate the sum of quantities sold for each product
-    #     product_sales = self.df.groupby('Product')['Quantity'].sum().reset_index()
-    #
-    #     # Plot a bar chart
-    #     plt.figure(figsize=(10, 6))
-    #     sns.barplot(x='Product', y='Quantity', data=product_sales)
-    #     plt.title('Sum of Quantities Sold for Each Product')
-    #     plt.xlabel('Product')
-    #     plt.ylabel('Sum of Quantity Sold')
-    #     plt.xticks(rotation=45, ha='right')
-    #     plt.tight_layout()
-    #    plt.show()
-    #13
     # def calculate_mean_quantity(self):
+    #     numpy_array = self.df.values
+    #     sorted_indices = np.argsort(-numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
+    #     # Sort the numpy_array using the sorted indices
+    #     sorted_numpy_array = numpy_array[sorted_indices]
+    #     mean=sorted_numpy_array.mean(sorted_indices)
+    #     max2=sorted_numpy_array.max(sorted_indices,2)
+    #     return [mean,max2]
+    def calculate_mean_quantity(self):
+        sorted_indices = np.argsort(-self.numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
+        # Sort the numpy_array using the sorted indices
+        sorted_numpy_array = self.numpy_array[sorted_indices]
+
+        # Calculate mean
+        mean = np.mean(sorted_numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
+
+        # Calculate median
+        median = np.median(sorted_numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
+
+        # Calculate second maximum
+        max2 = np.unique(sorted_numpy_array[:, 5])[-2]  # Second maximum
+
+        return mean, median, max2
+    #15
+
+    # def filter_by_sellings_or_and(self):
+    #     # Condition 1: Number of selling more than 5 or number of selling equals 0
+    #     condition_1 = (self.df['Quantity'] > 5) | (self.df['Quantity'] == 0)
+    #
+    #     # Condition 2: Price above 300 $ and sold less than 2 times
+    #     condition_2 = (self.df['Price'] > 300) & (self.df['Quantity'] < 2)
+    #
+    #     # Combine conditions using logical AND
+    #     filtered_df = self.df[condition_1 & condition_2]
+    #
+    #     return filtered_df
+    def filter_by_sellings_or(self):
+        # Condition 1: Number of selling more than 5 or number of selling equals 0
+        condition_1 = (self.df['Quantity'] > 5) | (self.df['Quantity'] == 0)
+        # Combine conditions using logical AND
+        filtered_df = self.df[condition_1 ]
+        return filtered_df
+    def filter_by_sellings_and(self):
+        # Condition 2: Price above 300 $ and sold less than 2 times
+        condition_2 = (self.df['Price'] > 300) & (self.df['Quantity'] < 2)
+
+        # Combine conditions using logical AND
+        filtered_df = self.df[condition_2]
+
+        return filtered_df
+    #16
+    def divide_by_2(self):
+        self.df['BlackFridayPrice'] = self.df['Total'] / 2
+        return self.df
+        # x = FileOperation()
+        # self.df = x.save_to_execl()
+    #17
+    # def calculate_stats(self, columns: str = None):
+    #     if(columns!=None):
+    #         max= self.numpy_array.max(columns)
+    #         sum=self.numpy_array.sum(columns)
+    #         asc=self.numpy_array.__abs__(columns)
+    #     else:
+    #         max= self.numpy_array.max()
+    #         sum=self.numpy_array.sum()
+    #         asc=self.numpy_array.__abs__()
+    #     return max,sum,asc
+    def calculate_stats(self, columns: str = None):
+        if columns is not None:
+            # Calculate stats for specific columns
+            column_indices = [self.df.columns.get_loc(col) for col in columns.split(',')]
+            max_vals = self.numpy_array[:, column_indices].max(axis=0)
+            sums = self.numpy_array[:, column_indices].sum(axis=0)
+            abs_vals = np.abs(self.numpy_array[:, column_indices])
+        else:
+            # Calculate stats for all columns
+            max_vals = self.numpy_array.max(axis=0)
+            sums = self.numpy_array.sum(axis=0)
+            abs_vals = np.abs(self.numpy_array)
+
+        return max_vals, sums, abs_vals
+    #18
+    #def convert_date_format(self, date_columns:List=None):
+        #self.df['Date'] = pd.to_datetime(self.df['Date'], format='%d.%m.%Y %H:%M:%S')
+        #return self.df
+    def convert_date_format(self, date_columns: List = None):
+        if date_columns is None:
+            date_columns = ['Date']  # Assuming 'Date' is the name of the column containing dates
+
+        for column in date_columns:
+            #self.df[column] = pd.to_datetime(self.df[column], format='%d.%m.%Y %H:%M:%S')
+            self.df[column] = pd.to_datetime(self.df[column], format='%d.%m.%Y %H:%M:%S', errors='coerce')
+
+            print(self.df[column])
+        return self.df
+
+

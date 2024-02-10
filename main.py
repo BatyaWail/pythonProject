@@ -23,7 +23,17 @@ def print_hi():
     print("9",x.analys_sales_data())
     print("10",x.add_to_dict_minimest_seling_and_avg())
     print("11",x.calculate_cumulative_sales())
-    x.bar_chart_category_sum()
+    print("12",x.calculate_90_percent_values())
+    #13
+    # x.bar_chart_category_sum()
+    print("14",x.calculate_mean_quantity())
+    # print("15",x.filter_by_sellings_or_and())
+    print("15-a",x.filter_by_sellings_and())
+    print("15-b",x.filter_by_sellings_or())
+    print("16",x.divide_by_2())
+    # y=x.calculate_stats()
+    # print("17","max",y[0],"sum",y[1],"abs",y[2] )
+    print("18",x.convert_date_format()['Date'])
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi()
