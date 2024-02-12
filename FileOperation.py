@@ -12,8 +12,13 @@ class FileOperation:
     def read_csv(self,file_path:str):
         return pd.read_csv(file_path)
     #2
-    def save_to_execl(self,data,file_name:str):
-        return pd.DataFrame(data)
+    # def save_to_execl(self,data,file_name:str):
+    #     return pd.DataFrame(data)
+    def save_to_execl(self, data, file_name: str):
+        # Save data to Excel file
+        df = pd.DataFrame(data)
+        df.to_excel(file_name, index=False)  # Save DataFrame to Excel without index
+
 
 class SalesData:
     def __init__(self,path:str):
@@ -150,20 +155,23 @@ class SalesData:
     #     max2=sorted_numpy_array.max(sorted_indices,2)
     #     return [mean,max2]
     def calculate_mean_quantity(self):
-        sorted_indices = np.argsort(-self.numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
-        # Sort the numpy_array using the sorted indices
-        sorted_numpy_array = self.numpy_array[sorted_indices]
+        try:
+            sorted_indices = np.argsort(-self.numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
+            # Sort the numpy_array using the sorted indices
+            sorted_numpy_array = self.numpy_array[sorted_indices]
 
-        # Calculate mean
-        mean = np.mean(sorted_numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
+            # Calculate mean
+            mean = np.mean(sorted_numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
 
-        # Calculate median
-        median = np.median(sorted_numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
+            # Calculate median
+            median = np.median(sorted_numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
 
-        # Calculate second maximum
-        max2 = np.unique(sorted_numpy_array[:, 5])[-2]  # Second maximum
+            # Calculate second maximum
+            max2 = np.unique(sorted_numpy_array[:, 5])[-2]  # Second maximum
 
-        return mean, median, max2
+            return mean, median, max2
+        except Exception as e:
+            print(f"<Batya&Yeudit> ",datetime.now()," >", {str(e)},"<Batya&Yeudit>")
     #15
 
     # def filter_by_sellings_or_and(self):
@@ -209,19 +217,22 @@ class SalesData:
     #         asc=self.numpy_array.__abs__()
     #     return max,sum,asc
     def calculate_stats(self, columns: str = None):
-        if columns is not None:
-            # Calculate stats for specific columns
-            column_indices = [self.df.columns.get_loc(col) for col in columns.split(',')]
-            max_vals = self.numpy_array[:, column_indices].max(axis=0)
-            sums = self.numpy_array[:, column_indices].sum(axis=0)
-            abs_vals = np.abs(self.numpy_array[:, column_indices])
-        else:
-            # Calculate stats for all columns
-            max_vals = self.numpy_array.max(axis=0)
-            sums = self.numpy_array.sum(axis=0)
-            abs_vals = np.abs(self.numpy_array)
+        try:
+            if columns is not None:
+                # Calculate stats for specific columns
+                column_indices = [self.df.columns.get_loc(col) for col in columns.split(',')]
+                max_vals = self.numpy_array[:, column_indices].max(axis=0)
+                sums = self.numpy_array[:, column_indices].sum(axis=0)
+                abs_vals = np.abs(self.numpy_array[:, column_indices])
+            else:
+                # Calculate stats for all columns
+                max_vals = self.numpy_array.max(axis=0)
+                sums = self.numpy_array.sum(axis=0)
+                abs_vals = np.abs(self.numpy_array)
 
-        return max_vals, sums, abs_vals
+            return max_vals, sums, abs_vals
+        except Exception as e:
+            print(f"<Batya&Yeudit> ",datetime.now()," >", {str(e)},"<Batya&Yeudit>")
     #18
     #def convert_date_format(self, date_columns:List=None):
         #self.df['Date'] = pd.to_datetime(self.df['Date'], format='%d.%m.%Y %H:%M:%S')
@@ -854,7 +865,7 @@ class SalesData:
             plt.ylabel('Quantity')
             plt.show()
         except Exception as e:
-            print(f"<Sara "+datetime.datetime()+" >"+ {str(e)}+"<Sara>")
+            print(f"<Batya&Yeudit> ",datetime.now()," >", {str(e)},"<Batya&Yeudit>")
 
 
 # 3. Seaborn Bar Plot
@@ -868,7 +879,7 @@ class SalesData:
             plt.xticks(rotation=45)
             plt.show()
         except Exception as e:
-            print(f"<Batya&Yeudit> "+datetime.datetime()+" >"+ {str(e)}+"<Batya&Yeudit>")
+            print(f"<Batya&Yeudit> ",datetime.now()," >", {str(e)},"<Batya&Yeudit>")
 
     def Seaborn_Box_Plot(self):
         try:
