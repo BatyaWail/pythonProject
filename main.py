@@ -34,6 +34,30 @@ def print_hi():
     # y=x.calculate_stats()
     # print("17","max",y[0],"sum",y[1],"abs",y[2] )
     print("18",x.convert_date_format()['Date'])
+    #task 6
+    #1?
+    # x.draw_calculate_total_sales()
+    #not good
+    #x.draw_calculate_total_sales_per_month()
+    #2
+    # x.draw_identify_best_selling_product()
+    #not good
+    # x.draw_calculate_total_sales_per_month()
+    #3
+    # x.draw_analys_sales_data()
+    #4
+    # x.draw_add_to_dict_minimest_seling_and_avg()
+    #5
+    #x.draw_calculate_cumulative_sales()
+    #6
+    # x.draw_calculate_mean_quantity()
+    #7
+    # x.draw_filter_by_sellings_or()
+    #not good
+    # x.draw_filter_by_sellings_and()
+    #8
+    # x.draw_divide_by_2()
+    #seabron
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     print_hi()
