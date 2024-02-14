@@ -6,8 +6,6 @@ import pandas as pd
 import os
 from FileOperation import FileOperation,SalesData  # Replace 'your_module' with the actual module name
 
-
-
 class TestFileOperation(unittest.TestCase):
 
     def setUp(self):
@@ -22,20 +20,6 @@ class TestFileOperation(unittest.TestCase):
         }
         self.test_df = pd.DataFrame(self.sample_data)
         self.your_class_instance = FileOperation()  # Instantiate without passing any arguments
-
-    #def test_read_csv(self):
-        ## Test reading CSV file
-        #file_path = 'YafeNof.csv'
-        #result_df = self.your_class_instance.read_csv(file_path)
-        #self.assertTrue(result_df.equals(self.test_df))
-
-    # def test_save_to_excel(self):
-    #     # Test saving DataFrame to Excel
-    #     file_name = 'test_output.xlsx'
-    #     self.your_class_instance.save_to_excel(self.test_df, file_name)
-    #     # Check if file exists
-    #     self.assertTrue(os.path.exists(file_name))
-
 
     @patch("pandas.read_csv")
     def test_read_excel_file_found(self, mock_read_csv):
@@ -98,7 +82,6 @@ class TestFileOperation(unittest.TestCase):
 
         # Assert that there are no duplicates
         self.assertFalse(has_duplicates)
-
     @patch("pandas.DataFrame.drop_duplicates")
     def test_eliminate_duplicates(self, mock_drop_duplicates):
         # Mocking the drop_duplicates method of DataFrame
@@ -127,7 +110,29 @@ class TestFileOperation(unittest.TestCase):
         expected_total_sales = sum(sample_data['Total'])
         self.assertEqual(total_sales, expected_total_sales)
 
-    #not-run-good
+    def test_identify_best_selling_product(self):
+        # Initialize a sample DataFrame for testing
+        sample_data = {
+            'Customer ID': [3, 5, 2, 6, 8, 7, 9],
+            'Date': ['15.01.2023', '16.01.2023', '17.01.2023', '10.02.2023', '05.03.2023', '19.01.2023', '13.02.2023'],
+            'Product': ['Sidur', 'Teilim', 'Sidur', 'Chumash', 'Tanach', 'Sidur', 'Tanach'],
+            'Price': [60, 400, 50, 300, 80, 50, 30],
+            'Quantity': [3, 5, 10, 2, 20, 5, 9],
+            'Total': [180, 2000, 600, 800, 1800, 250, 2900]
+        }
+        file_op = SalesData("YafeNof.csv")
+        file_op.df = pd.DataFrame(sample_data)
+
+        # Call the identify_best_selling_product method
+        best_selling_product = file_op.identify_best_selling_product()
+
+        # Expected result based on the sample data
+        expected_best_selling_product = 'Tanach'
+
+        # Assert that the identified best selling product matches the expected result
+        self.assertEqual(best_selling_product, expected_best_selling_product)
+
+    # not-run-good
     # def test_calculate_total_sales_per_month(self):
     #     # Initialize a sample DataFrame for testing
     #     sample_data = {
@@ -170,27 +175,6 @@ class TestFileOperation(unittest.TestCase):
     #
     #     # Assert that the calculated total sales per month matches the expected result
     #     pd.testing.assert_series_equal(result, expected_result)
-    def test_identify_best_selling_product(self):
-        # Initialize a sample DataFrame for testing
-        sample_data = {
-            'Customer ID': [3, 5, 2, 6, 8, 7, 9],
-            'Date': ['15.01.2023', '16.01.2023', '17.01.2023', '10.02.2023', '05.03.2023', '19.01.2023', '13.02.2023'],
-            'Product': ['Sidur', 'Teilim', 'Sidur', 'Chumash', 'Tanach', 'Sidur', 'Tanach'],
-            'Price': [60, 400, 50, 300, 80, 50, 30],
-            'Quantity': [3, 5, 10, 2, 20, 5, 9],
-            'Total': [180, 2000, 600, 800, 1800, 250, 2900]
-        }
-        file_op = SalesData("YafeNof.csv")
-        file_op.df = pd.DataFrame(sample_data)
-
-        # Call the identify_best_selling_product method
-        best_selling_product = file_op.identify_best_selling_product()
-
-        # Expected result based on the sample data
-        expected_best_selling_product = 'Tanach'
-
-        # Assert that the identified best selling product matches the expected result
-        self.assertEqual(best_selling_product, expected_best_selling_product)
 
 if __name__ == '__main__':
     unittest.main()

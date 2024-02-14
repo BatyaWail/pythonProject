@@ -61,10 +61,7 @@ class SalesData:
     def identify_month_with_highest_sales(self):
         maxMonth= self.calculate_total_sales_per_month()
         return  max(maxMonth)
-    # def identify_month_with_highest_sales(self):
-    #     monthly_sum = self.calculate_total_sales_per_month()
-    #     max_month = monthly_sum.idxmax()  # Get the index (month) with the maximum total sales
-    #     return max_month
+
    #9
     def analys_sales_data(self):
         x=self.identify_best_selling_product()
@@ -130,7 +127,6 @@ class SalesData:
     #     y=self.calculate_total_sales()
     #     sns.lineplot(x='Product', y='Total', data=self.df)
     #     plt.show()
-#from gpt
     def bar_chart_category_sum(self):
         # Calculate the sum of quantities sold for each product
         product_sales = self.df.groupby('Product')['Quantity'].sum().reset_index()
@@ -144,16 +140,6 @@ class SalesData:
         plt.xticks(rotation=45, ha='right')
         plt.tight_layout()
         plt.show()
-
-    #13
-    # def calculate_mean_quantity(self):
-    #     numpy_array = self.df.values
-    #     sorted_indices = np.argsort(-numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
-    #     # Sort the numpy_array using the sorted indices
-    #     sorted_numpy_array = numpy_array[sorted_indices]
-    #     mean=sorted_numpy_array.mean(sorted_indices)
-    #     max2=sorted_numpy_array.max(sorted_indices,2)
-    #     return [mean,max2]
     def calculate_mean_quantity(self):
         try:
             sorted_indices = np.argsort(-self.numpy_array[:, 5])  # Assuming 'Total' is the 6th column (index 5)
@@ -172,19 +158,7 @@ class SalesData:
             return mean, median, max2
         except Exception as e:
             print(f"<Batya&Yeudit> ",datetime.now()," >", {str(e)},"<Batya&Yeudit>")
-    #15
 
-    # def filter_by_sellings_or_and(self):
-    #     # Condition 1: Number of selling more than 5 or number of selling equals 0
-    #     condition_1 = (self.df['Quantity'] > 5) | (self.df['Quantity'] == 0)
-    #
-    #     # Condition 2: Price above 300 $ and sold less than 2 times
-    #     condition_2 = (self.df['Price'] > 300) & (self.df['Quantity'] < 2)
-    #
-    #     # Combine conditions using logical AND
-    #     filtered_df = self.df[condition_1 & condition_2]
-    #
-    #     return filtered_df
     def filter_by_sellings_or(self):
         # Condition 1: Number of selling more than 5 or number of selling equals 0
         condition_1 = (self.df['Quantity'] > 5) | (self.df['Quantity'] == 0)
@@ -359,27 +333,6 @@ class SalesData:
         plt.tight_layout()
         plt.show()
 
-    # def draw_calculate_mean_quantity(self):
-    #     mean, median, max2 = self.calculate_mean_quantity()
-    #
-    #     categories = ['Mean', 'Median', 'Second Max']
-    #     values = [mean, median, max2]
-    #
-    #     angles = np.linspace(0, 2 * np.pi, len(categories), endpoint=False).tolist()
-    #
-    #     # The plot is circular, so we need to "complete the loop" and append the start value to the end.
-    #     values += values[:1]
-    #     angles += angles[:1]
-    #
-    #     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-    #     ax.fill(angles, values, color='skyblue', alpha=0.4)
-    #     ax.plot(angles, values, color='blue', linewidth=2, linestyle='solid')
-    #     ax.set_yticklabels([])
-    #     ax.set_xticks(angles[:-1])
-    #     ax.set_xticklabels(categories)
-    #     ax.set_title('Statistical Summary of Quantity')
-    #
-    #     plt.show()
     def draw_calculate_mean_quantity(self):
 
         mean, median, max2 = self.calculate_mean_quantity()
@@ -458,62 +411,7 @@ class SalesData:
         plt.show()
 
     def draw_divide_by_2(self):
-        # divided_df = self.divide_by_2()
-        #
-        # # Plot histogram of 'BlackFridayPrice'
-        # plt.hist(divided_df['BlackFridayPrice'], bins=10, color='skyblue', edgecolor='black')
-        #
-        # # Add labels and title
-        # plt.xlabel('Black Friday Price')
-        # plt.ylabel('Frequency')
-        # plt.title('Distribution of Black Friday Prices (Divided by 2)')
-        #
-        # # Show plot
-        # plt.show()
 
-        # original_total = self.df['Total']
-        # black_friday_price = self.divide_by_2()[
-        #     'BlackFridayPrice']  # Assuming 'BlackFridayPrice' is created by divide_by_2 function
-        #
-        # # Plot the scatter plot
-        # plt.scatter(range(len(original_total)), original_total, label='Original Total')
-        # plt.scatter(range(len(black_friday_price)), black_friday_price, label='Black Friday Price')
-        #
-        # # Add labels and title
-        # plt.xlabel('Index')
-        # plt.ylabel('Total')
-        # plt.title('Comparison of Original Total and Black Friday Price')
-        #
-        # # Add legend
-        # plt.legend()
-        #
-        # # Show plot
-        # plt.show()
-        # original_total = self.df['Total']
-        # black_friday_price = self.divide_by_2()[
-        #     'BlackFridayPrice']  # Assuming 'BlackFridayPrice' is created by divide_by_2 function
-        #
-        # # Plot the scatter plot
-        # plt.scatter(range(len(original_total)), original_total, label='Original Total')
-        # plt.scatter(range(len(black_friday_price)), black_friday_price, label='Black Friday Price')
-        #
-        # # Draw lines connecting points for the same product
-        # for index, row in self.df.iterrows():
-        #     product = row['Product']
-        #     original_point = original_total[index]
-        #     black_friday_point = black_friday_price[index]
-        #     plt.plot([index, index], [original_point, black_friday_point], color='gray', linestyle='--', linewidth=0.5)
-        #
-        # # Add labels and title
-        # plt.xlabel('Index')
-        # plt.ylabel('Total')
-        # plt.title('Comparison of Original Total and Black Friday Price')
-        #
-        # # Add legend
-        # plt.legend()
-        #
-        # # Show plot
-        # plt.show()
         original_total = self.df['Total']
         black_friday_price = self.divide_by_2()[
             'BlackFridayPrice']  # Assuming 'BlackFridayPrice' is created by divide_by_2 function
@@ -640,135 +538,6 @@ class SalesData:
         # Show plot
         plt.show()
 
-    # def draw2_analys_sales_data(self):
-    #     # Perform analysis
-    #     analysis_dict = self.analys_sales_data()
-    #
-    #     # Convert dictionary to DataFrame for plotting
-    #     df_analysis = pd.DataFrame(analysis_dict.items(), columns=['Metric', 'Value'])
-    #
-    #     # Set the style
-    #     sns.set(style="whitegrid")
-    #
-    #     # Plot the swarm plot
-    #     plt.figure(figsize=(8, 6))
-    #     ax = sns.swarmplot(x='Metric', y='Value', data=df_analysis)
-    #
-    #     # Add labels and title
-    #     ax.set_xlabel('Metric')
-    #     ax.set_ylabel('Value')
-    #     ax.set_title('Analysis of Sales Data')
-    #
-    #     # Show plot
-    #     plt.show()
-    # def draw2_add_to_dict_minimest_seling_and_avg(self):
-    #     # # Perform analysis
-    #     # analysis_dict = self.add_to_dict_minimest_seling_and_avg()
-    #     #
-    #     # # Convert dictionary to DataFrame for plotting
-    #     # df_analysis = pd.DataFrame(analysis_dict.items(), columns=['Metric', 'Value'])
-    #     #
-    #     # # Set the style
-    #     # sns.set(style="whitegrid")
-    #     #
-    #     # # Plot the swarm plot
-    #     # plt.figure(figsize=(10, 6))
-    #     # ax = sns.swarmplot(x='Metric', y='Value', data=df_analysis)
-    #     #
-    #     # # Add labels and title
-    #     # ax.set_xlabel('Metric')
-    #     # ax.set_ylabel('Value')
-    #     # ax.set_title('Analysis of Sales Data')
-    #     #
-    #     # # Show plot
-    #     # plt.show()
-    #     # Perform analysis
-    #     analysis_dict = self.add_to_dict_minimest_seling_and_avg()
-    #
-    #     # Convert dictionary to DataFrame for plotting
-    #     df_analysis = pd.DataFrame(analysis_dict.items(), columns=['Metric', 'Value'])
-    #
-    #     # Set the style
-    #     sns.set(style="whitegrid")
-    #
-    #     # Plot the bar plot
-    #     plt.figure(figsize=(10, 6))
-    #     ax = sns.barplot(x='Metric', y='Value', data=df_analysis)
-    #
-    #     # Add labels and title
-    #     ax.set_xlabel('Metric')
-    #     ax.set_ylabel('Value')
-    #     ax.set_title('Analysis of Sales Data')
-    #
-    #     # Show plot
-    #     plt.show()
-    # def draw2_add_to_dict_minimest_seling_and_avg(self):
-    #     # # Perform analysis
-    #     # analysis_dict = self.add_to_dict_minimest_seling_and_avg()
-    #     #
-    #     # # Convert dictionary to DataFrame for plotting
-    #     # df_analysis = pd.DataFrame(analysis_dict.items(), columns=['Metric', 'Value'])
-    #     #
-    #     # # Convert the DataFrame to long format
-    #     # df_analysis_long = df_analysis.melt(id_vars=['Metric'], var_name='Product', value_name='Value')
-    #     #
-    #     # # Set the style
-    #     # sns.set(style="whitegrid")
-    #     #
-    #     # # Plot the bar plot
-    #     # plt.figure(figsize=(10, 6))
-    #     # ax = sns.barplot(x='Product', y='Value', hue='Metric', data=df_analysis_long)
-    #     #
-    #     # # Add labels and title
-    #     # ax.set_xlabel('Product')
-    #     # ax.set_ylabel('Value')
-    #     # ax.set_title('Analysis of Sales Data')
-    #     #
-    #     # # Show plot
-    #     # plt.show()
-    #     analysis_dict = self.add_to_dict_minimest_seling_and_avg()
-    #
-    #     # Convert dictionary to DataFrame for plotting
-    #     df_analysis = pd.DataFrame(analysis_dict.items(), columns=['Metric', 'Value'])
-    #
-    #     # Convert the DataFrame to long format
-    #     df_analysis_long = df_analysis.melt(id_vars=['Metric'], var_name='Product', value_name='SalesValue')
-    #
-    #     # Set the style
-    #     sns.set(style="whitegrid")
-    #
-    #     # Plot the bar plot
-    #     plt.figure(figsize=(10, 6))
-    #     ax = sns.barplot(x='Product', y='SalesValue', hue='Metric', data=df_analysis_long)
-    #
-    #     # Add labels and title
-    #     ax.set_xlabel('Product')
-    #     ax.set_ylabel('Value')
-    #     ax.set_title('Analysis of Sales Data')
-    #
-    #     # Show plot
-    #     plt.show()
-    # def draw2_add_to_dict_minimest_seling_and_avg(self):
-    #     # Perform analysis
-    #     analysis_dict = self.add_to_dict_minimest_seling_and_avg()
-    #
-    #     # Convert dictionary to DataFrame for plotting
-    #     df_analysis = pd.DataFrame(analysis_dict.items(), columns=['Metric', 'Value'])
-    #
-    #     # Create a FacetGrid
-    #     g = sns.FacetGrid(df_analysis, col="Metric", height=6)
-    #
-    #     # Map a bar plot on the FacetGrid
-    #     g.map(sns.barplot, "Product", "Value")
-    #
-    #     # Set titles for each subplot
-    #     g.set_titles("{col_name}")
-    #
-    #     # Adjust layout
-    #     plt.tight_layout()
-    #
-    #     # Show plot
-    #     plt.show()
     def draw2_cumulative_sales(self):
         # Perform calculations
         cumulative_sales = self.calculate_cumulative_sales()
@@ -794,39 +563,7 @@ class SalesData:
         plt.show()
 
     def draw2_90_percent_values(self):
-        # Perform calculations
-        # self.calculate_90_percent_values()
-        #
-        # # Create a histogram plot with Seaborn
-        # plt.figure(figsize=(10, 6))
-        # sns.histplot(data=self.df, x='Discount', bins=30, kde=True)
-        #
-        # # Set labels and title
-        # plt.xlabel('Discount')
-        # plt.ylabel('Frequency')
-        # plt.title('Distribution of 90% Discount Values')
-        #
-        # # Show plot
-        # plt.tight_layout()
-        # plt.show()
-        # Call the function to calculate 90% discount values
-        # discount_values = self.calculate_90_percent_values()
-        #
-        # # Plot the distribution of 90% discount values
-        # plt.figure(figsize=(8, 6))
-        # sns.histplot(discount_values, kde=True)
-        # plt.title('Distribution of 90% Discount Values')
-        # plt.xlabel('Discount Value')
-        # plt.ylabel('Frequency')
-        # plt.show()
-        # discount_values = self.calculate_90_percent_values()
-        #
-        # # Create a joint plot to visualize the relationship between 'Total' and 'Discount'
-        # sns.set(style="white", color_codes=True)
-        # sns.jointplot(x='Total', y='Discount', data=self.df, kind='scatter')
-        # plt.title('Joint Plot of Total vs 90% Discount Values')
-        # plt.show()
-        # Call the function to calculate 90% discount values
+
         discount_values = self.calculate_90_percent_values()
 
         # Create a violin plot to visualize the distribution of 90% discount values
