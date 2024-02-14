@@ -13,6 +13,10 @@ import pandas as pd
 from document import Document
 from pandas.io.sas.sas_constants import magic
 import random
+
+from Task8 import Task8
+
+
 def print_hi():
     # Use a breakpoint in the code line below to debug your script.
     # def main():
@@ -84,6 +88,7 @@ def print_hi():
     # x.draw_sales_and_highest_amount()
     # x.print_python_version()
     #hebrow
+    hebrow=Hebrow()
     def read_file(file_path):
         # Use python-magic to identify the file type
         mime = magic.Magic(mime=True)
@@ -166,6 +171,14 @@ def print_hi():
             for value in x.df[col]:
                 print(value)
     iterate_numeric_values()
+
+    task8=Task8()
+    file_info = "UsersName.txt"  # Example file information (name and extension)
+    user_generator = task8.read_users_from_file("UsersName.txt")
+
+    # Iterate over the generator to print each username
+    for username in user_generator:
+        print(username)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
